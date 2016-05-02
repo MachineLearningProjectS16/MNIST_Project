@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import RandomizedPCA
 from skimage.feature import hog
+from skimage.filters import sobel
 
 def plotBarGraph(labels, values, title, xLabel, yLabel, filename):
     #Create values and labels for bar chart

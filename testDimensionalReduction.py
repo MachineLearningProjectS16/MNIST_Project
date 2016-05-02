@@ -10,9 +10,9 @@ import util
 
 dataset = datasets.fetch_mldata("MNIST Original")
 (xtr, xte, ytr, yte) = train_test_split(dataset.data / 255.0, dataset.target.astype("int0"), test_size = 0.33)
-"""
+
 result = []
-for n_components in range(1,201):
+for n_components in range(1,101):
     xtrain, xtest = util.getPrincipleComponents(xtr, xte, n_components=n_components)
     clf = KNeighborsClassifier()
     clf = clf.fit(xtrain, ytr)
@@ -29,7 +29,7 @@ util.plotBarGraph(map(lambda x : x, zip(*result)[0]), zip(*result)[1], "PCA on M
 result.sort(key=lambda x: x[1], reverse=True)
 print result
 print "best principle component is", result[0]
-"""
+
 
 xtrain, xtest = util.getPrincipleComponents(xtr, xte, n_components=50)
 
@@ -54,7 +54,12 @@ clf = clf.fit(xtrain, ytr)
 y_pred = clf.predict(xtest)
 print "BernoulliNB score ", clf.score(xtest,yte) #0.727835497835
 
-clf = SVC()
+
+# {'kernel': 'rbf', 'C': 1000, 'verbose': False, 'probability': False, 'degree': 3,
+# 'shrinking': True, 'max_iter': -1, 'random_state': None, 'tol': 0.001,
+# 'cache_size': 200, 'coef0': 0.0, 'gamma': 0.001, 'class_weight': None}
+
+clf = SVC(kernel = 'rbf', C=1000, gamma=0.001)
 clf = clf.fit(xtrain, ytr)
 y_pred = clf.predict(xtest)
 print "SVC score ", clf.score(xtest,yte) # 0.980086580087
